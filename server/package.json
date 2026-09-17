@@ -1,0 +1,19 @@
+{
+  "name": "tonnage-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Сервер приложения «Тоннаж»: статика + синхронизация дневника тренировок",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --no-warnings src/index.js",
+    "dev": "node --env-file-if-exists=.env --no-warnings --watch src/index.js",
+    "hash": "node --no-warnings src/index.js hash",
+    "icons": "node --no-warnings src/make-icons.js",
+    "sim": "node --no-warnings src/sim.js",
+    "test": "node --no-warnings src/test-merge.js"
+  },
+  "dependencies": {}
+}

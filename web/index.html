@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Тоннаж</title>
+<meta name="description" content="Дневник тренировок на набор массы: программа ведётся сама, разбор техники, таймер отдыха и прогресс.">
+
+<!-- Установка на экран iPhone.
+     Пути относительные: приложение должно одинаково работать и в корне
+     домена, и в подкаталоге вида логин.github.io/tonnage/ -->
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Тоннаж">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="./icons/icon-180.png">
+<link rel="icon" href="./icons/icon-192.png" sizes="192x192">
+<meta name="theme-color" content="#e9edf2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0c0f14" media="(prefers-color-scheme: dark)">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Unbounded:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- Экран входа -->
+<div class="gate" id="gate" hidden>
+  <div class="gate-box" id="gateBox"></div>
+</div>
+
+<!-- Приложение -->
+<div class="app" id="app" hidden>
+  <header class="topbar" id="topbar">
+    <div>
+      <h1 class="screen-title" id="scrTitle">Сегодня</h1>
+      <div class="screen-sub" id="scrSub"></div>
+    </div>
+    <div class="syncdot" id="syncdot"></div>
+  </header>
+
+  <section id="scr-today"></section>
+  <section id="scr-path" hidden></section>
+  <section id="scr-lib"  hidden></section>
+  <section id="scr-more" hidden></section>
+</div>
+
+<!-- Таймер отдыха -->
+<div class="timerbar" id="timerbar" hidden>
+  <svg class="ring" viewBox="0 0 40 40" aria-hidden="true">
+    <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,.2)"></circle>
+    <circle id="ringFg" cx="20" cy="20" r="16" stroke="#f2a900" stroke-dasharray="100.5" stroke-dashoffset="0" transform="rotate(-90 20 20)"></circle>
+  </svg>
+  <div>
+    <div class="t-left" id="tLeft">2:00</div>
+    <div class="t-lab" id="tLab">Отдых между подходами</div>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:6px">
+    <button id="tPlus">+30с</button>
+    <button id="tSkip">Готов</button>
+  </div>
+</div>
+
+<div id="tabbarWrap" hidden>
+  <nav class="tabbar">
+    <div class="tabbar-inner" id="tabbar" role="tablist"></div>
+  </nav>
+</div>
+
+<div class="sheet-scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true">
+  <div class="sheet-inner" id="sheetInner"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

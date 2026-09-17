@@ -1,0 +1,54 @@
+# Публикация приложения на GitHub Pages.
+#
+# Публикуется только каталог web/ — серверная часть и документация
+# на сайт не попадают.
+#
+# Включить один раз: Settings → Pages → Source → GitHub Actions.
+# Дальше каждый push в main сам обновляет приложение на телефоне.
+
+name: Публикация приложения
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Если пушей несколько подряд — публикуем последний, предыдущие отменяем.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Проверить, что приложение собрано целиком
+        run: |
+          for f in index.html app.js engine.js exercises.js store.js doc.js \
+                   figure.js charts.js styles.css sw.js manifest.webmanifest \
+                   adapters/index.js icons/icon-192.png; do
+            test -f "web/$f" || { echo "Не хватает web/$f"; exit 1; }
+          done
+          echo "Все файлы на месте"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

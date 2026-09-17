@@ -1,0 +1,42 @@
+[Unit]
+Description=Тоннаж — дневник тренировок
+Documentation=file:///opt/tonnage/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=tonnage
+Group=tonnage
+WorkingDirectory=/opt/tonnage/server
+Environment=NODE_ENV=production
+Environment=TONNAGE_DATA=/var/lib/tonnage
+EnvironmentFile=/opt/tonnage/server/.env
+ExecStart=/usr/bin/node --no-warnings src/index.js
+
+# Перезапуск при любом падении: приложение должно быть доступно,
+# когда человек стоит у стойки, а не когда админ заметит логи.
+Restart=always
+RestartSec=3
+
+# Журнал
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tonnage
+
+# Ограничения прав: сервису нужен только свой каталог с базой
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/tonnage
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=false
+
+[Install]
+WantedBy=multi-user.target
