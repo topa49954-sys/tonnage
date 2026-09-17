@@ -13,7 +13,9 @@
     "hash": "node --no-warnings src/index.js hash",
     "icons": "node --no-warnings src/make-icons.js",
     "sim": "node --no-warnings src/sim.js",
-    "test": "node --no-warnings src/test-merge.js"
+    "test": "node --no-warnings src/test-merge.js",
+    "smoke": "node --no-warnings test/smoke.mjs"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "_comment": "Зависимостей нет намеренно. jsdom нужен только дымовому тесту и ставится по требованию: npm i --no-save jsdom"
 }
